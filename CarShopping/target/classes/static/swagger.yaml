@@ -1,0 +1,72 @@
+swagger: "2.0"
+info:
+  description: "The service exposes the APIs needed for car shopping"
+  version: "1.0.0"
+  title: "Car Shopping"
+  termsOfService: "http://swagger.io/terms/"
+  license:
+    name: "Apache 2.0"
+    url: "http://www.apache.org/licenses/LICENSE-2.0.html"
+
+tags:
+- name: "car shopping"
+  description: "APIs car shopping"
+schemes:
+- "http"
+
+paths:
+  /cars/{ID}:
+    get:
+      tags: 
+      - "car shopping"
+      summary: "return list of cars from warehouse"
+      description: "return list of cars from warehouse"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "string"
+          description: "Id to be filtered"
+      responses:
+        "200":
+          description : "returns list of cars"
+          schema:
+            $ref: "#/definitions/carmodel"
+        "400":
+           description : "Bad request"
+        "404":
+           description : "car not found"
+
+definitions:
+
+  carmodel:
+    type: "object"
+    properties:
+      location:
+        type: "string"
+      vehicles:
+        type: "array"
+        items:
+          type: "object"
+          properties:
+            _id:
+              type: "string"
+            make:
+              type: "string"
+            model:
+              type: "string"
+            year_model:
+              type: "string"
+            price:
+              type: "string"
+            licensed:
+              type: "string"
+            date_added:
+              type: "string"
+        
+      
+
+ 
