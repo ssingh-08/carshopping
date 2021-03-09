@@ -15,10 +15,107 @@ schemes:
 - "http"
 
 paths:
+  /carts:
+    post:
+      tags:
+        - "cart"
+      summary: "creates shopping cart having car"
+      description: "creates shopping cart having car"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "body"
+          name: "create cart"
+          schema:
+            $ref: "#/definitions/cartmodel"
+      responses: 
+        "201":
+          description: "resource cart created"
+          schema:
+            $ref: "#/definitions/cartmodel"
+        "400":
+          description: "Bad request"
+        "500":
+          description: "Internal server error"
+          
+  /carts/{ID}:
+    delete:
+      tags:
+        - "cart"
+      summary: "delete cart"
+      description: "delete cart"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"  
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "string"
+          required: true
+      responses: 
+        "201":
+          description: "resource deleted"
+          schema:
+            $ref: "#/definitions/cartmodel"
+        "400":
+          description: "Bad request"
+        "500":
+          description: "Internal server error"
+          
+    get:
+      tags: 
+      - "cart"
+      summary: "return list of carts"
+      description: "return list of carts"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+        - in: "path"
+          name: "ID"
+          type: "string"
+          required: true
+          description: "Id to be filtered"
+      responses:
+        "200":
+          description : "returns list of carts"
+        "400":
+           description : "Bad request"
+        "404":
+           description : "car not found"
+           
+    put:
+      tags: 
+      - "cart"
+      summary: "add or remove cars from cart"
+      description: "add or remove cars from cart"
+      consumes:
+      - "application/json"
+      produces:
+      - "application/json"
+      parameters:
+         - in: "body"
+           name: "ID"
+           schema:
+            $ref: "#/definitions/cartmodel"
+           required: true
+          
+      responses:
+        "200":
+          description : "add or remove cars from cart"
+        "400":
+           description : "Bad request"
+        "404":
+           description : "car not found"
+        
   /cars/{ID}:
     get:
       tags: 
-      - "car shopping"
+      - "car"
       summary: "return list of cars from warehouse"
       description: "return list of cars from warehouse"
       consumes:
@@ -39,6 +136,7 @@ paths:
            description : "Bad request"
         "404":
            description : "car not found"
+  
 
 definitions:
 
@@ -67,6 +165,18 @@ definitions:
             date_added:
               type: "string"
         
-      
-
- 
+  
+  cartmodel:
+    type: "object"
+    properties:
+      user:
+        type: "string"
+        description: "unique identifier"
+      operation:
+        type: "string"
+        enum: [ADD,DELETE]
+        description: "ADD for adding new car in cart. DELETE for deleting car from cart
+      car:
+          $ref: "#/definitions/carmodel"
+          
+  
